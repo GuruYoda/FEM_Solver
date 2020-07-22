@@ -32,7 +32,22 @@ public class Visualizer {
 	public void drawConstraints() {
 		for(int i = 0 ; i < struct.getNumberOfNodes() ; i++) {
 			if(struct.getNode(i).getConstraint() != null) {
-				
+				for(int j = 0 ; j < struct.getNode(i).getPosition().getSize() ; j++) {
+					if(struct.getNode(i).getDOFNumbers()[j] != -1) {
+						Cone c = new Cone(struct.getNode(i).getPosition().toArray()[0],
+								          struct.getNode(i).getPosition().toArray()[1],
+								          struct.getNode(i).getPosition().toArray()[2]);
+						if(j == 0) {
+							c.setDirection(1, 0, 0);
+						}
+						else if(j == 1) {
+							c.setDirection(0, 1, 0);
+						}
+						else {
+							c.setDirection(0, 0, 1);
+						}
+					}
+				}
 			}
 		}
 	}
