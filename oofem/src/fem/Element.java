@@ -17,7 +17,45 @@ public class Element {
 		this.n2 = n2;
 	}
 	
-	//public IMatrix computeStiffnessMatrix() {}
+	public IMatrix computeStiffnessMatrix() {
+		//Computing Direction Cosines (Done in getE1 method)
+		//double c1 = (this.n2.getPosition().toArray()[0] - this.n1.getPosition().toArray()[0])/getLength();
+		//double c2 = (this.n2.getPosition().toArray()[1] - this.n1.getPosition().toArray()[1])/getLength();
+		//double c3 = (this.n2.getPosition().toArray()[2] - this.n1.getPosition().toArray()[2])/getLength();
+		
+		IMatrix T = new Array2DMatrix(2,6);
+		IMatrix Ke = new Array2DMatrix(2,2);
+		IMatrix Kg = new Array2DMatrix(6,6);
+		IMatrix tmp = new Array2DMatrix(6,2);
+		
+		//Adding the direction cosines in the transformation matrix
+		T.addRow(0, 0, getE1());
+		T.addRow(1, 3, getE1());
+		
+		//Computation of Local Stiffness matrix
+		double con = (this.eModulus * this.area / getLength());
+		Ke.add(0, 0, con*1);
+		Ke.add(0, 1, con*-1);
+		Ke.add(1, 0, con*-1);
+		Ke.add(1, 1, con*1);
+		
+		//double[][] K = new double[6][6];
+//		double[][] K = {{con*(c1*c1) , con*(c1*c2) , con*(c1*c3) , con*(-c1*c1) , con*-(c1*c2) , con*-(c1*c3)},
+//			            {con*(c1*c2) , con*(c2*c2) , con*(c2*c3) , con*-(c1*c2) , con*-(c2*c2) , con*-(c2*c3)},
+//			            {con*(c1*c3) , con*(c2*c3) , con*(c3*c3) , con*-(c3*c1) , con*-(c3*c2) , con*-(c3*c3)},
+//			            {con*-(c1*c1) , con*-(c1*c2) , con*-(c1*c3) , con*(c1*c1) , con*(c1*c2) , con*(c1*c3)},
+//			            {con*-(c1*c2) , con*-(c2*c2) , con*-(c2*c3) , con*(c1*c2) , con*(c2*c2) , con*(c2*c3)},
+//			            {con*-(c1*c3) , con*-(c2*c3) , con*-(c3*c3) , con*(c3*c1) , con*(c3*c2) , con*(c3*c3)}};
+//		
+	
+		//Computation of global stiffness matrix from Local stiffness matrix
+		BLAM.multiply(1.0 , BLAM.TRANSPOSE , T, BLAM.NO_TRANSPOSE , Ke, 0.0 , tmp);
+		BLAM.multiply(1.0 , BLAM.NO_TRANSPOSE , tmp , BLAM.NO_TRANSPOSE , T, 0.0 , Kg);
+		
+		//The final transposed stiffness matrix 
+		return Kg;
+		
+	}
 	
 	public void enumerateDOFs() {
 		int count = 0;
@@ -37,7 +75,15 @@ public class Element {
 	
 	//public double computeForce() {}
 	
-	//public Vector3D getE1() {}
+	public Vector3D getE1() {
+		//Computing Direction Cosines
+		double[] c = new double[3];
+		for(int i = 0 ; i < c.length ; i++) {
+			c[i] = (this.n2.getPosition().toArray()[i] - this.n1.getPosition().toArray()[i])/getLength();
+		}
+		Vector3D e1 = new Vector3D(c);
+		return e1;
+	}
 	
 	public double getLength() {
 		double[] a1 = this.n1.getPosition().toArray();

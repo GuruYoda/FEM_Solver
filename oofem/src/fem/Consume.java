@@ -1,6 +1,8 @@
 package fem;
 
 import iceb.jnumerics.Vector3D;
+import inf.v3d.obj.Cone;
+import inf.v3d.view.Viewer;
 
 public class Consume {
 	
@@ -17,6 +19,12 @@ public class Consume {
 		for (double i : d) {
 			System.out.println(i);
 		}
+		
+		Viewer viewer = new Viewer ();
+		Cone co = new Cone(0,0,0);
+		co.setDirection(1, 1, 0);
+		viewer.addObject3D(co);
+		viewer . setVisible ( true );
 		
 	}
 

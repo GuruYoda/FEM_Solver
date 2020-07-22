@@ -32,7 +32,7 @@ public class Structure {
 		return node.get(id);
 	}
 	
-	public int NumberOfElements() {
+	public int getNumberOfElements() {
 		return element.size();
 	}
 	
@@ -43,42 +43,42 @@ public class Structure {
 	public void printStructure() {
 		System.out.println("Listing Structure \n");
 		System.out.println("Nodes");
-		System.out.println("idx \t " + "  x1 \t \t" + " x2 \t \t" + "x3");
+		System.out.println("  idx" + ArrayFormat.fFormat("x1") + ArrayFormat.fFormat("x2") + ArrayFormat.fFormat("x3"));
 		int count1 = 0;
 		for(Node n : node) {
-			System.out.print(count1);
+			System.out.print(ArrayFormat.format(count1));
 			n.print();
 			count1++;
 		}
 		System.out.println("Constraints");
-		System.out.println("node \t " + "  u1 \t \t" + " u2 \t \t" + "u3");
+		System.out.println("  node" + ArrayFormat.fFormat("u1") + ArrayFormat.fFormat("u2") + ArrayFormat.fFormat("u3"));
 		count1 = 0;
 		for(Node n : node) {
-			
 			if (n.getConstraint() != null) {
-				System.out.print(count1);
+				System.out.print(ArrayFormat.format(count1));
 				n.getConstraint().print();
 			}
 			count1++;
 		}
 		System.out.println("Forces");
-		System.out.println("node \t " + "  r1 \t \t" + " r2 \t \t" + "r3");
+		System.out.println("  node" + ArrayFormat.fFormat("r1") + ArrayFormat.fFormat("r2") + ArrayFormat.fFormat("r3"));
 		count1 = 0;
 		for(Node n : node) {
 			if (n.getForce() != null) {
-				System.out.print(count1);
+				System.out.print(ArrayFormat.format(count1));
 				n.getForce().print();
 			}
 			count1++;
 		}
 		System.out.println("Elements");
 		count1 = 0;
-		System.out.println("idx \t " + "  E \t \t" + " A \t  " + "\tlength");
+		System.out.println("  idx" + ArrayFormat.fFormat("E") + ArrayFormat.fFormat("A") + ArrayFormat.fFormat("length"));
 		for(Element e : element) {
-			System.out.print(count1);
+			System.out.print(ArrayFormat.format(count1));
 			e.print();
 			count1++;
 		}
+		
 	}
 	
 	//public void solve() {}
