@@ -76,7 +76,12 @@ public class Node {
 	}
 	
 	public Vector3D getDisplacement() {
-		return this.v.add(this.v1);
+		if(v1 != null) {
+			return this.v.add(this.v1);
+		}
+		else {
+			return this.v;
+		}
 	}
 	
 	public void print() {
