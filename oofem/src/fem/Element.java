@@ -40,6 +40,7 @@ public class Element {
 		Ke.add(1, 1, con*1);
 		
 		//double[][] K = new double[6][6];
+		// Conventional way tp form a stiffness matrix
 //		double[][] K = {{con*(c1*c1) , con*(c1*c2) , con*(c1*c3) , con*(-c1*c1) , con*-(c1*c2) , con*-(c1*c3)},
 //			            {con*(c1*c2) , con*(c2*c2) , con*(c2*c3) , con*-(c1*c2) , con*-(c2*c2) , con*-(c2*c3)},
 //			            {con*(c1*c3) , con*(c2*c3) , con*(c3*c3) , con*-(c3*c1) , con*-(c3*c2) , con*-(c3*c3)},
@@ -53,6 +54,7 @@ public class Element {
 		BLAM.multiply(1.0 , BLAM.NO_TRANSPOSE , tmp , BLAM.NO_TRANSPOSE , T, 0.0 , Kg);
 		
 		//The final transposed stiffness matrix 
+		//System.out.println(ArrayFormat.fFormat(Kg.toString()));
 		return Kg;
 		
 	}
