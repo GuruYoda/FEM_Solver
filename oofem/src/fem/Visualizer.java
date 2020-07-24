@@ -104,5 +104,6 @@ public class Visualizer {
 			cs.setColor(0, 255, 0);
 		}
 		view.addObject3D(cs);
-	} 
+	}
+	
 }

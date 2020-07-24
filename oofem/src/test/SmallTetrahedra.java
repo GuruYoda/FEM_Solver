@@ -46,12 +46,14 @@ public class SmallTetrahedra {
 		return struct ;
 		}
 	
-		public static void main ( String [] args ) {
+		public static void main ( String [] args ) throws Exception {
 			
 			Structure struct = createStructure ();
 			struct.printStructure();
-			struct.solve();
-			struct.printResults();
+			//struct.solve();
+			//struct.printResults();
+			
+			struct.solve1();
 			Viewer viewer = new Viewer ();
 			
 			Visualizer viz = new Visualizer (struct , viewer );
@@ -60,7 +62,7 @@ public class SmallTetrahedra {
 			viz . setForceSymbolRadius (0.075);
 			viz . drawElements ();
 			viz . drawConstraints ();
-			//viz . drawForces ();
+			viz . drawElementForces ();
 			viz.drawNodes();
 			viz.drawDisplacements();
 			viewer . setVisible ( true );

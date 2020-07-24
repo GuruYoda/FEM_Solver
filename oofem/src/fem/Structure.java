@@ -4,6 +4,8 @@ import iceb.jnumerics.*;
 import iceb . jnumerics .lse .*;
 import inf.text.*;
 import java.util.Scanner;
+import org.ejml.data.SingularMatrixException;
+import org.ejml.simple.SimpleMatrix;
 
 
 import java.util.*;
@@ -16,6 +18,8 @@ public class Structure {
 	private IMatrix K_a;
 	private double[] rGlobal;
 	private double[] uGlobal;
+	private SimpleMatrix K , r , u;
+	private double[] uGlobal1;
 	
 	public Node addNode(double x1 , double x2 , double x3) {
 		Node n = new Node(x1 , x2 , x3);
@@ -86,56 +90,53 @@ public class Structure {
 		
 	}
 	
-	/*public void solve() {
+	public void solve1() throws Exception {
 		
 		// size of our matrix
 		int neq = enumerateDOFs();
 		
-		// create the solver object
-		ILSESolver solver = new GeneralMatrixLSESolver();
-		
-		// info object for coefficient matrix
-		QuadraticMatrixInfo aInfo = solver.getAInfo();
+		SimpleMatrix a = new SimpleMatrix(neq, neq);
+
+		SimpleMatrix b = new SimpleMatrix(neq, 1);
 		
 		// get coefficient matrix
 		this.K_a = new Array2DMatrix(neq, neq);
 		assembleStiffnessMatrix(K_a);
-		IMatrix A = solver.getA();
 		
 		// right hand side
 		this.rGlobal = new double[neq];
 		assembleLoadVector(rGlobal);
-		double[] b = rGlobal;
-		
-		// initialize solver
-		aInfo.setSize(neq);
-		solver.initialize();
 		
 		// set entries of matrix and right hand side
 		
 		for (int i = 0; i < neq ; i++) {
 			for (int j = 0 ; j < neq ; j++) {
-				A.set(i, j, K_a.get(i, j)); 
+				a.set(i, j, K_a.get(i, j));
+				b.set(i, rGlobal[i]);
 			}
 		}
 		
-		// print
-		System .out . println (" Solving K x = r");
-		System .out . println (" Matrix K");
-		System .out . println ( MatrixFormat.format(A));
-		System .out . println (" Vector r");
-		System .out . println ( ArrayFormat . format (b));
-		// after calling solve , b contains the solution
+		this.K = a;
+		this.r = b;
+		
 		try {
-			solver.solve (b);
-		} 
-		catch ( SolveFailedException e) {
-			System .out . println ("Solve failed : " + e.getMessage ());
+			SimpleMatrix x = a.solve(b);
+			this.u = x;
+			System.out.println("Solution vector x: " + x);
+			this.uGlobal1 = new double[neq];
+			for(int i = 0 ; i < neq ; i++) {
+				uGlobal1[i] = x.get(i);
+			}
+			selectDisplacements(uGlobal1);
+			
+			printResults1();
 		}
-		// print result
-		System .out . println (" Solution x");
-		System .out . println (ArrayFormat.format (b));
-	}*/
+		catch (SingularMatrixException e) {
+			throw new Exception("Singular matrix");
+		}
+	}
+		
+	
 	
 	public void solve() {
 		// size of our matrix
@@ -224,6 +225,7 @@ public class Structure {
         //System .out . println (" Solution x");
         //System .out . println ( ArrayFormat . format (x));
         selectDisplacements(uGlobal);
+        printResults();
 		}
 		
 		else {
@@ -368,6 +370,46 @@ public class Structure {
         // print result
         System .out . println (" Solution x in global system");
         System .out . println ( ArrayFormat . format (uGlobal));
+        System.out.println();
+        System.out.println("Displacements");
+		System.out.println("  node" + ArrayFormat.fFormat("u1") + ArrayFormat.fFormat("u2") + ArrayFormat.fFormat("u3"));
+		int count1 = 0;
+		for(Node n : node) {
+			if (n.getDisplacement() != null) {
+				System.out.print(ArrayFormat.format(count1));
+				System.out.print(ArrayFormat.fFormat(n.getDisplacement().toString()));
+			}
+			count1++;
+			System.out.println();
+		}
+		
+		System.out.println("Elememt Forces");
+		System.out.println("  elem" + ArrayFormat.fFormat("force"));
+		count1 = 0;
+		for(Element e : element) {
+			System.out.print(ArrayFormat.format(count1));
+			System.out.print(ArrayFormat.format(e.computeForce()));
+			count1++;
+			System.out.println();
+		}
+	}
+	
+	public void printResults1() {
+		
+		// print
+		System .out . println (" Solving K x = r");
+		System .out . println (" Matrix K");
+		System .out . println (this.K);
+		System .out . println (" Vector r");
+		System .out . println (this.r);
+				
+		System.out.println();
+		System.out.println("Listing analysis results");
+		System .out . println (" Solving K x = r");
+		System.out.println();
+        // print result
+        System .out . println (" Solution x in global system");
+        System .out . println (this.u);
         System.out.println();
         System.out.println("Displacements");
 		System.out.println("  node" + ArrayFormat.fFormat("u1") + ArrayFormat.fFormat("u2") + ArrayFormat.fFormat("u3"));

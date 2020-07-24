@@ -11,5 +11,26 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/oofem/lib/bo-fbb-informatik-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Gursimran Singh/Desktop/RUB/2nd_Semester/OOFEM/ojalgo-47.1.1.jar"/>
+	<classpathentry kind="lib" path="ejml-v0.39-libs/ejml-cdense-0.39-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Gursimran%20Singh/Desktop/RUB/2nd_Semester/OOFEM/ojalgo-47.3.0-SNAPSHOT-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="ejml-v0.39-libs/ejml-cdense-0.39.jar"/>
+	<classpathentry kind="lib" path="ejml-v0.39-libs/ejml-core-0.39-sources.jar"/>
+	<classpathentry kind="lib" path="ejml-v0.39-libs/ejml-core-0.39.jar"/>
+	<classpathentry kind="lib" path="ejml-v0.39-libs/ejml-ddense-0.39-sources.jar"/>
+	<classpathentry kind="lib" path="ejml-v0.39-libs/ejml-ddense-0.39.jar"/>
+	<classpathentry kind="lib" path="ejml-v0.39-libs/ejml-dsparse-0.39-sources.jar"/>
+	<classpathentry kind="lib" path="ejml-v0.39-libs/ejml-dsparse-0.39.jar"/>
+	<classpathentry kind="lib" path="ejml-v0.39-libs/ejml-experimental-0.39-sources.jar"/>
+	<classpathentry kind="lib" path="ejml-v0.39-libs/ejml-experimental-0.39.jar"/>
+	<classpathentry kind="lib" path="ejml-v0.39-libs/ejml-fdense-0.39-sources.jar"/>
+	<classpathentry kind="lib" path="ejml-v0.39-libs/ejml-fdense-0.39.jar"/>
+	<classpathentry kind="lib" path="ejml-v0.39-libs/ejml-simple-0.39-sources.jar"/>
+	<classpathentry kind="lib" path="ejml-v0.39-libs/ejml-simple-0.39.jar"/>
+	<classpathentry kind="lib" path="ejml-v0.39-libs/ejml-zdense-0.39-sources.jar"/>
+	<classpathentry kind="lib" path="ejml-v0.39-libs/ejml-zdense-0.39.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
