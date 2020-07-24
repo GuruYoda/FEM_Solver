@@ -35,19 +35,18 @@ public class SmallTetraeder {
 		struct . addElement (e, a, 0, 3);
 		struct . addElement (e, a, 1, 2);
 		struct . addElement (e, a, 2, 3);
-		
 		struct . addElement (e, a, 3, 1);
 		// return the new structure
 		return struct ;
 		}
-		public static void main ( String [] args ) {
+	
+	public static void main ( String [] args ) {
 		Viewer viewer = new Viewer ();
 		Structure struct = createStructure ();
 		Visualizer viz = new Visualizer (struct , viewer );
-		//viz . setConstraintSymbolScale (1);
+		viz . setConstraintSymbolScale (1);
 		viz . setForceSymbolScale (3e-5);
 		viz . setForceSymbolRadius (0.075);
-		viz . drawNodes();
 		viz . drawElements ();
 		viz . drawConstraints ();
 		viz . drawElementForces ();

@@ -1,5 +1,7 @@
 package fem;
 
+import java.util.Vector;
+
 import iceb.jnumerics.*;
 
 import inf.text.*;
@@ -83,6 +85,13 @@ public class Node {
 			return this.v;
 		}*/
 		return this.v1;
+	}
+	
+	public Vector3D getScaledDisplacement(double fact) {
+		double[] scale = new double[this.node.length];
+		Vector3D scaled_disp = new Vector3D(scale);
+		scaled_disp = this.v1;		
+		return scaled_disp.multiply(fact);
 	}
 	
 	public void print() {

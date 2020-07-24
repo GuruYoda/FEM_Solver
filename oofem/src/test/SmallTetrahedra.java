@@ -57,7 +57,7 @@ public class SmallTetrahedra {
 			Viewer viewer = new Viewer ();
 			
 			Visualizer viz = new Visualizer (struct , viewer );
-			viz . setForceSymbolScale (1);
+			viz . setConstraintSymbolScale (1);
 			viz . setForceSymbolScale (3e-5);
 			viz . setForceSymbolRadius (0.075);
 			viz . drawElements ();
@@ -66,6 +66,7 @@ public class SmallTetrahedra {
 			viz.drawNodes();
 			viz.drawDisplacements();
 			viewer . setVisible ( true );
+			
 		}
 
 }

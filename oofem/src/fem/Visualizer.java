@@ -1,26 +1,40 @@
 package fem;
 
+import iceb.jnumerics.Vector3D;
 import inf.v3d.obj.*;
 
 import inf .v3d . view .* ;
 
 public class Visualizer {
-	private double dispalcementScale;
-	private double symbolScale=10;
+	private double dispalcementScale = 3000;
+	private double symbolScale = 3;
 	private Structure struct;
 	private Viewer view;
 	private double forceSymbolScale;
 	private double forceSymbolRadius;
+	private double constraintSymbolScale;
 	
 	public Visualizer(Structure struct,Viewer view){
 		this.struct=struct;
 		this.view=view;
 	}
 	
+	public void setForceSymbolScale(double s) {
+		this.forceSymbolScale=s;
+	}
+	
+	public void setForceSymbolRadius(double r) {
+		this.forceSymbolRadius=r;
+	}
+	
+	public void setConstraintSymbolScale(double s) {
+		this.forceSymbolScale=s;
+	}
+	
 	public void drawNodes() {
 		for(int i = 0 ; i < struct.getNumberOfNodes() ; i++) {
 			Sphere s=new Sphere(struct.getNode(i).getPosition().toArray());
-			s.setRadius(0.2);
+			s.setRadius(0.1 * symbolScale);
 			s.setColor(0,0,0);
 			view.addObject3D(s);
 		}
@@ -31,7 +45,7 @@ public class Visualizer {
 		for(int i=0;i<struct.getNumberOfElements();i++) {
 			cs.addCylinder(struct.getElement(i).getNode1().getPosition().toArray(), 
 					struct.getElement(i).getNode2().getPosition().toArray(),
-					struct.getElement(i).getArea()*symbolScale);
+					Math.sqrt(struct.getElement(i).getArea()/Math.PI)*symbolScale);
 			cs.setColor(0, 0, 255);
 		}
 		view.addObject3D(cs);
@@ -65,14 +79,6 @@ public class Visualizer {
 		}
 	}
 	
-	public void setForceSymbolScale(double s) {
-		this.forceSymbolScale=s;
-	}
-	
-	public void setForceSymbolRadius(double r) {
-		this.forceSymbolRadius=r;
-	}
-	
 	public void drawElementForces() {
 		for(int i = 0 ; i < struct.getNumberOfNodes() ; i++) {
 			if(struct.getNode(i).getForce()!=null) {
@@ -89,21 +95,27 @@ public class Visualizer {
 	}
 	
 	public void drawDisplacements() {
-		for(int i = 0 ; i < struct.getNumberOfNodes() ; i++) {
-			Sphere s=new Sphere();
-			s.setCenter(struct.getNode(i).getDisplacement().toArray());
-			s.setRadius(0.2);
-			s.setColor(0,60,0);
-			view.addObject3D(s);
+		Vector3D Scaled_Disp_n1;
+		Vector3D Scaled_Disp_n2;
+		for(int i = 0 ; i < struct.getNumberOfElements() ; i++) {
+			Scaled_Disp_n1 = struct.getElement(i).getNode1().getPosition().add(struct.getElement(i).getNode1().getDisplacement().multiply(dispalcementScale));
+			Scaled_Disp_n2 = struct.getElement(i).getNode2().getPosition().add(struct.getElement(i).getNode2().getDisplacement().multiply(dispalcementScale));
+			Sphere s1=new Sphere();
+			s1.setCenter(Scaled_Disp_n1.toArray());
+			s1.setRadius(0.1 * symbolScale);
+			s1.setColor(0,60,0);
+			view.addObject3D(s1);
+			Sphere s2=new Sphere();
+			s2.setCenter(Scaled_Disp_n2.toArray());
+			s2.setRadius(0.1 * symbolScale);
+			s2.setColor(0,60,0);
+			view.addObject3D(s2);
+			CylinderSet cs = new CylinderSet();
+			cs.addCylinder(Scaled_Disp_n1.toArray(), Scaled_Disp_n2.toArray(), Math.sqrt(struct.getElement(i).getArea()/Math.PI)*symbolScale);
+			cs.setColor(0, 100, 0);
+			view.addObject3D(cs);
 		}
-		CylinderSet cs = new CylinderSet();
-		for(int i=0;i<struct.getNumberOfElements();i++) {
-			cs.addCylinder(struct.getElement(i).getNode1().getDisplacement().toArray(), 
-					struct.getElement(i).getNode2().getDisplacement().toArray(),
-					struct.getElement(i).getArea()*10);
-			cs.setColor(0, 255, 0);
-		}
-		view.addObject3D(cs);
+		
 	}
 	
 }
