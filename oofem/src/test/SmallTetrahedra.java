@@ -50,7 +50,7 @@ public class SmallTetrahedra {
 			Structure struct = createStructure ();
 			struct.printStructure();
 			struct.solve();
-		
+			
 		}
 
 }
