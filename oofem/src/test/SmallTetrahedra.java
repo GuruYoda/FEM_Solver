@@ -65,6 +65,7 @@ public class SmallTetrahedra {
 			viz . drawElementForces ();
 			viz.drawNodes();
 			viz.drawDisplacements();
+			viz.drawElementNormalForces();
 			viewer . setVisible ( true );
 			
 		}

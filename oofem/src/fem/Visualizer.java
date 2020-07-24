@@ -13,6 +13,7 @@ public class Visualizer {
 	private double forceSymbolScale;
 	private double forceSymbolRadius;
 	private double constraintSymbolScale;
+	private double normalforceSymbolScale = 2;
 	
 	public Visualizer(Structure struct,Viewer view){
 		this.struct=struct;
@@ -100,6 +101,7 @@ public class Visualizer {
 		for(int i = 0 ; i < struct.getNumberOfElements() ; i++) {
 			Scaled_Disp_n1 = struct.getElement(i).getNode1().getPosition().add(struct.getElement(i).getNode1().getDisplacement().multiply(dispalcementScale));
 			Scaled_Disp_n2 = struct.getElement(i).getNode2().getPosition().add(struct.getElement(i).getNode2().getDisplacement().multiply(dispalcementScale));
+			
 			Sphere s1=new Sphere();
 			s1.setCenter(Scaled_Disp_n1.toArray());
 			s1.setRadius(0.1 * symbolScale);
@@ -112,10 +114,49 @@ public class Visualizer {
 			view.addObject3D(s2);
 			CylinderSet cs = new CylinderSet();
 			cs.addCylinder(Scaled_Disp_n1.toArray(), Scaled_Disp_n2.toArray(), Math.sqrt(struct.getElement(i).getArea()/Math.PI)*symbolScale);
-			cs.setColor(0, 100, 0);
+			cs.setColor(100, 0 , 0);
 			view.addObject3D(cs);
 		}
 		
+	}
+	
+	public void drawElementNormalForces() {
+		double[] n1 = {1,0,0};
+		double[] n2 = {0,1,0};
+		Vector3D v1 = new Vector3D(n1);
+		Vector3D v2 = new Vector3D(n2);
+		Vector3D d , p , s1 , s2 , x1 , x2;
+		
+		for(int i = 0 ; i < struct.getNumberOfElements() ; i++) {
+			x1 = struct.getElement(i).getNode1().getPosition().add(struct.getElement(i).getNode1().getDisplacement().multiply(dispalcementScale));
+			x2 = struct.getElement(i).getNode2().getPosition().add(struct.getElement(i).getNode2().getDisplacement().multiply(dispalcementScale));
+			d = struct.getElement(i).getNode1().getPosition().add(struct.getElement(i).getNode1().getDisplacement().multiply(dispalcementScale)).subtract(struct.getElement(i).getNode2().getPosition().add(struct.getElement(i).getNode2().getDisplacement().multiply(dispalcementScale))).normalize();
+			if (v1.dot(d) != 1) {
+				p = v1.vectorProduct(d);
+				s1 = struct.getElement(i).getNode1().getPosition().add(struct.getElement(i).getNode1().getDisplacement().multiply(dispalcementScale)).add(d.vectorProduct(p).multiply(normalforceSymbolScale)); 
+				s2 = struct.getElement(i).getNode2().getPosition().add(struct.getElement(i).getNode2().getDisplacement().multiply(dispalcementScale)).add(d.vectorProduct(p).multiply(normalforceSymbolScale));
+				
+				PolygonSet ps = new PolygonSet();
+				ps.insertVertex(x1.get(0), x1.get(1), x1.get(2), 0);
+				ps.insertVertex(x2.get(0), x2.get(1), x2.get(2), 0);
+				ps.insertVertex(s2.get(0), s2.get(1), s2.get(2), 0);
+				ps.insertVertex(s1.get(0), s1.get(1), s1.get(2), 0);
+				ps.polygonComplete();
+				view.addObject3D(ps);
+			}
+			else {
+				p = v2.vectorProduct(d);
+				s1 = struct.getElement(i).getNode1().getPosition().add(struct.getElement(i).getNode1().getDisplacement().multiply(dispalcementScale)).add(d.vectorProduct(p).multiply(normalforceSymbolScale)); 
+				s2 = struct.getElement(i).getNode2().getPosition().add(struct.getElement(i).getNode2().getDisplacement().multiply(dispalcementScale)).add(d.vectorProduct(p).multiply(normalforceSymbolScale));
+				PolygonSet ps = new PolygonSet();
+				ps.insertVertex(x1.get(0), x1.get(1), x1.get(2), 0);
+				ps.insertVertex(x2.get(0), x2.get(1), x2.get(2), 0);
+				ps.insertVertex(s2.get(0), s2.get(1), s2.get(2), 0);
+				ps.insertVertex(s1.get(0), s1.get(1), s1.get(2), 0);
+				ps.polygonComplete();
+				view.addObject3D(ps);
+			}
+		}
 	}
 	
 }
