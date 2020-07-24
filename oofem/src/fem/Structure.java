@@ -136,8 +136,6 @@ public class Structure {
 		}
 	}
 		
-	
-	
 	public void solve() {
 		// size of our matrix
 		int neq = enumerateDOFs();
