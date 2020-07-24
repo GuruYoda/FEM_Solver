@@ -9,7 +9,6 @@ import java.util.Scanner;
 import java.util.*;
 
 
-
 public class Structure {
 	
 	private ArrayList<Node> node = new ArrayList<Node>(); // Creating Array List
@@ -220,15 +219,15 @@ public class Structure {
         
         this.uGlobal = x;
         
-        System .out . println (" Solving K x = r");
+        //System .out . println (" Solving K x = r");
         // print result
-        System .out . println (" Solution x");
-        System .out . println ( ArrayFormat . format (x));
+        //System .out . println (" Solution x");
+        //System .out . println ( ArrayFormat . format (x));
         selectDisplacements(uGlobal);
 		}
 		
 		else {
-			System.out.println("***The Matrix is SINGULAR***");
+			System.out.println("***The K Matrix is SINGULAR***");
 		}
 	}
 	
@@ -350,7 +349,7 @@ public class Structure {
 			double[] temp = new double[3];
 			for (int i = 0 ; i < n.getDOFNumbers().length ; i++) {
 				if(n.getDOFNumbers()[i] != -1) {
-					temp[i] = uGlobal[count];
+					temp[i] = temp[i] + uGlobal[count];
 					//System.out.println(temp[i]);
 					count++;
 				}
@@ -360,6 +359,37 @@ public class Structure {
 		}
 	}
 	
-	//public void printResults() {}
+	public void printResults() {
+		
+		System.out.println();
+		System.out.println("Listing analysis results");
+		System .out . println (" Solving K x = r");
+		System.out.println();
+        // print result
+        System .out . println (" Solution x in global system");
+        System .out . println ( ArrayFormat . format (uGlobal));
+        System.out.println();
+        System.out.println("Displacements");
+		System.out.println("  node" + ArrayFormat.fFormat("u1") + ArrayFormat.fFormat("u2") + ArrayFormat.fFormat("u3"));
+		int count1 = 0;
+		for(Node n : node) {
+			if (n.getDisplacement() != null) {
+				System.out.print(ArrayFormat.format(count1));
+				System.out.print(ArrayFormat.fFormat(n.getDisplacement().toString()));
+			}
+			count1++;
+			System.out.println();
+		}
+		
+		System.out.println("Elememt Forces");
+		System.out.println("  elem" + ArrayFormat.fFormat("force"));
+		count1 = 0;
+		for(Element e : element) {
+			System.out.print(ArrayFormat.format(count1));
+			System.out.print(ArrayFormat.format(e.computeForce()));
+			count1++;
+			System.out.println();
+		}
+	}
 
 }

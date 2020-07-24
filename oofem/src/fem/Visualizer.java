@@ -41,7 +41,7 @@ public class Visualizer {
 		for(int i = 0 ; i < struct.getNumberOfNodes() ; i++) {
 			if(struct.getNode(i).getConstraint() != null) {
 				for(int j = 0 ; j < struct.getNode(i).getPosition().getSize() ; j++) {
-					if(struct.getNode(i).getDOFNumbers()[j] != -1) {
+					if(struct.getNode(i).getDOFNumbers()[j] == -1) {
 						Cone c = new Cone(struct.getNode(i).getPosition().toArray()[0],
 								          struct.getNode(i).getPosition().toArray()[1],
 								          struct.getNode(i).getPosition().toArray()[2]);

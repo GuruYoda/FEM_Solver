@@ -9,6 +9,7 @@ public class Element {
 	private double area, eModulus;
 	private int[] dofNumbers = new int[6];
 	private Node n1 , n2;
+	private IMatrix Transformation;
 	
 	public Element(double e, double a, Node n1 , Node n2) {
 		this.eModulus = e;
@@ -31,6 +32,7 @@ public class Element {
 		//Adding the direction cosines in the transformation matrix
 		T.addRow(0, 0, getE1());
 		T.addRow(1, 3, getE1());
+		this.Transformation = T;
 		
 		//Computation of Local Stiffness matrix
 		double con = (this.eModulus * this.area / getLength());
@@ -75,7 +77,20 @@ public class Element {
 		return dofNumbers;
 	}
 	
-	//public double computeForce() {}
+	public double computeForce() {
+		IMatrix disp = new Array2DMatrix(6, 1);
+		IMatrix tmp = new Array2DMatrix(2,1);
+		for(int i = 0 ; i < 3 ; i++) {
+			disp.add(i, 0, this.n1.getDisplacement().get(i));
+		}
+		for(int i = 3 ; i < 6 ; i++) {
+			disp.add(i, 0, this.n2.getDisplacement().get(i-3));
+		}
+
+		BLAM.multiply(1.0 , BLAM.NO_TRANSPOSE , this.Transformation, BLAM.NO_TRANSPOSE , disp, 0.0 , tmp);
+		
+		return (this.area*this.eModulus/getLength()) * (tmp.get(1, 0) - tmp.get(0, 0));
+	}
 	
 	public Vector3D getE1() {
 		//Computing Direction Cosines

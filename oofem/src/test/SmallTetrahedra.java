@@ -3,12 +3,13 @@ package test;
 import iceb.jnumerics.*;
 
 import inf.text.*;
-
+import inf.v3d.view.Viewer;
 import fem.Constraint ;
 import fem.Element ;
 import fem.Force ;
 import fem.Node ;
 import fem.Structure;
+import fem.Visualizer;
 
 public class SmallTetrahedra {
 	
@@ -50,7 +51,19 @@ public class SmallTetrahedra {
 			Structure struct = createStructure ();
 			struct.printStructure();
 			struct.solve();
+			struct.printResults();
+			Viewer viewer = new Viewer ();
 			
+			Visualizer viz = new Visualizer (struct , viewer );
+			viz . setForceSymbolScale (1);
+			viz . setForceSymbolScale (3e-5);
+			viz . setForceSymbolRadius (0.075);
+			viz . drawElements ();
+			viz . drawConstraints ();
+			//viz . drawForces ();
+			viz.drawNodes();
+			viz.drawDisplacements();
+			viewer . setVisible ( true );
 		}
 
 }
