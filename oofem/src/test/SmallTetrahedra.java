@@ -1,7 +1,6 @@
 package test;
 
 import iceb.jnumerics.*;
-
 import inf.text.*;
 import inf.v3d.view.Viewer;
 import fem.Constraint ;
@@ -41,7 +40,7 @@ public class SmallTetrahedra {
 		struct . addElement (e, a, 1, 2);
 		struct . addElement (e, a, 2, 3);
 		struct . addElement (e, a, 3, 1);
-	    
+		
 		// return the new structure
 		return struct ;
 		}

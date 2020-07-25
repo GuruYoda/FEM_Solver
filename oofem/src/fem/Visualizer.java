@@ -47,7 +47,7 @@ public class Visualizer {
 			cs.addCylinder(struct.getElement(i).getNode1().getPosition().toArray(), 
 					struct.getElement(i).getNode2().getPosition().toArray(),
 					Math.sqrt(struct.getElement(i).getArea()/Math.PI)*symbolScale);
-			cs.setColor(0, 0, 255);
+			cs.setColor(150, 150, 150);
 		}
 		view.addObject3D(cs);
 	} 
@@ -60,16 +60,19 @@ public class Visualizer {
 						Cone c = new Cone(struct.getNode(i).getPosition().toArray()[0],
 								          struct.getNode(i).getPosition().toArray()[1],
 								          struct.getNode(i).getPosition().toArray()[2]);
-						c.setColor(128,128,128);
+						
 						if(j == 0) {
+							c.setColor(150,150,50);
 							c.setDirection(1, 0, 0);
 							c.translate(-1, 0, 0);
 						}
 						else if(j == 1) {
+							c.setColor(50,150,150);
 							c.setDirection(0, 1, 0);
 							c.translate(0, -1, 0);
 						}
 						else {
+							c.setColor(150,50,150);
 							c.setDirection(0, 0, 1);
 							c.translate(0, 0, -1);
 						}
@@ -114,7 +117,7 @@ public class Visualizer {
 			view.addObject3D(s2);
 			CylinderSet cs = new CylinderSet();
 			cs.addCylinder(Scaled_Disp_n1.toArray(), Scaled_Disp_n2.toArray(), Math.sqrt(struct.getElement(i).getArea()/Math.PI)*symbolScale);
-			cs.setColor(100, 0 , 0);
+			cs.setColor(0, 0 , 250);
 			view.addObject3D(cs);
 		}
 		
@@ -142,6 +145,12 @@ public class Visualizer {
 				ps.insertVertex(s2.get(0), s2.get(1), s2.get(2), 0);
 				ps.insertVertex(s1.get(0), s1.get(1), s1.get(2), 0);
 				ps.polygonComplete();
+				if (Math.abs(struct.getElement(i).computeForce()) > 2E4) {
+					ps.setColor(250, 0 , 0);
+				}
+				else {
+					ps.setColor(255, 255 , 0);
+				}
 				view.addObject3D(ps);
 			}
 			else {
@@ -154,6 +163,12 @@ public class Visualizer {
 				ps.insertVertex(s2.get(0), s2.get(1), s2.get(2), 0);
 				ps.insertVertex(s1.get(0), s1.get(1), s1.get(2), 0);
 				ps.polygonComplete();
+				if (Math.abs(struct.getElement(i).computeForce()) > 2E4) {
+					ps.setColor(250, 0 , 0);
+				}
+				else {
+					ps.setColor(255, 255 , 0);
+				}
 				view.addObject3D(ps);
 			}
 		}
