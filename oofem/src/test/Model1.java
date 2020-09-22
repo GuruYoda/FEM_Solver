@@ -10,7 +10,7 @@ import fem.Node ;
 import fem.Structure;
 import fem.Visualizer;
 
-public class SmallTetrahedra {
+public class Model1 {
 	
 	public static Structure createStructure () {
 		Structure struct = new Structure ();
@@ -61,7 +61,7 @@ public class SmallTetrahedra {
 			viz . setForceSymbolRadius (0.075);
 			viz . setNormalForceSymbolScale(2);
 			viz . setSymbolScale(3);
-			viz . setDispalcementScale(3000);
+			viz . setDispalcementScale(1e-11);
 			viz . drawElements ();
 			viz . drawConstraints ();
 			viz . drawElementForces ();
@@ -71,5 +71,6 @@ public class SmallTetrahedra {
 			viewer . setVisible ( true );
 			
 		}
+
 
 }

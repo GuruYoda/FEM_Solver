@@ -362,11 +362,11 @@ public class Structure {
 		
 		System.out.println();
 		System.out.println("Listing analysis results");
-		System .out . println (" Solving K x = r");
+		System.out.println (" Solving K x = r");
 		System.out.println();
         // print result
-        System .out . println (" Solution x in global system");
-        System .out . println ( ArrayFormat . format (uGlobal));
+        System.out.println (" Solution x in global system");
+        System.out.println ( ArrayFormat . format (uGlobal));
         System.out.println();
         System.out.println("Displacements");
 		System.out.println("  node" + ArrayFormat.fFormat("u1") + ArrayFormat.fFormat("u2") + ArrayFormat.fFormat("u3"));
@@ -395,20 +395,20 @@ public class Structure {
 		
 		// print
 		System.out.println();
-		System .out . println ("Solving system of linear equations : K x = r to determine x");
+		System.out.println ("Solving system of linear equations : K x = r to determine x");
 		System.out.println();
-		System .out . println ("Matrix K");
-		System .out . println (this.K);
-		System .out . println ("Vector r");
-		System .out . println (this.r);
+		System.out.println ("Matrix K");
+		System.out.println (this.K);
+		System.out.println ("Vector r");
+		System.out.println (this.r);
 				
 		System.out.println();
 		System.out.println("***************  Listing analysis results  ***************");
 		//System .out . println (" Solving K x = r");
 		System.out.println();
         // print result
-        System .out . println ("Solution x in global system");
-        System .out . println (this.u);
+        System.out.println ("Solution x in global system");
+        System.out.println (this.u);
         System.out.println();
         System.out.println("Nodal Displacements");
 		System.out.println("  node" + ArrayFormat.fFormat("u1") + ArrayFormat.fFormat("u2") + ArrayFormat.fFormat("u3"));

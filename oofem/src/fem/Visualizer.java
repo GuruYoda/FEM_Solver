@@ -6,30 +6,43 @@ import inf.v3d.obj.*;
 import inf .v3d . view .* ;
 
 public class Visualizer {
-	private double dispalcementScale = 3000;
-	private double symbolScale = 3;
+	
 	private Structure struct;
 	private Viewer view;
+	private double dispalcementScale;  //= 3000;
+	private double symbolScale; // = 3;
 	private double forceSymbolScale;
 	private double forceSymbolRadius;
 	private double constraintSymbolScale;
-	private double normalforceSymbolScale = 2;
+	private double normalforceSymbolScale; // = 2;
 	
 	public Visualizer(Structure struct,Viewer view){
 		this.struct=struct;
 		this.view=view;
 	}
 	
-	public void setForceSymbolScale(double s) {
-		this.forceSymbolScale=s;
+	public void setDispalcementScale(double ds) {
+		this.dispalcementScale=ds;
 	}
 	
-	public void setForceSymbolRadius(double r) {
-		this.forceSymbolRadius=r;
+	public void setSymbolScale(double ss) {
+		this.symbolScale=ss;
 	}
 	
-	public void setConstraintSymbolScale(double s) {
-		this.forceSymbolScale=s;
+	public void setForceSymbolScale(double fss) {
+		this.forceSymbolScale=fss;
+	}
+	
+	public void setForceSymbolRadius(double fsr) {
+		this.forceSymbolRadius=fsr;
+	}
+	
+	public void setConstraintSymbolScale(double css) {
+		this.constraintSymbolScale=css;
+	}
+	
+	public void setNormalForceSymbolScale(double nfss) {
+		this.normalforceSymbolScale=nfss;
 	}
 	
 	public void drawNodes() {
