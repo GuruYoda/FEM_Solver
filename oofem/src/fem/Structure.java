@@ -316,11 +316,16 @@ public class Structure {
 	private void assembleLoadVector(double[] rGlobal) {
 		for (Node n : node) {
 			if (n.getForce() != null) {
-				for(int i : n.getDOFNumbers()) {
-					if (i != -1) {
-						rGlobal[i] = n.getForce().getComponent(i);
+				for(int  i = 0 ; i < n.getDOFNumbers().length ; i++) {
+					if (n.getDOFNumbers()[i] != -1) {
+						rGlobal[n.getDOFNumbers()[i]] = n.getForce().getComponent(i);
 					}
 				}
+//				for(int i : n.getDOFNumbers()) {
+//					if (i != -1) {
+//						rGlobal[i] = n.getForce().getComponent(i);
+//					}
+//				}
 			}
 		}
 		//System.out.println(ArrayFormat.format(rGlobal));
@@ -329,15 +334,24 @@ public class Structure {
 	private void assembleStiffnessMatrix(IMatrix kGlobal) {
 		for (Element e : element) {
 			IMatrix temp = e.computeStiffnessMatrix();
-			for(int i : e.getDOFNumbers()) {
-					if(i != -1) {
-						for(int j : e.getDOFNumbers()) {
-							if (j != -1) {
-								kGlobal.add(i, j, temp.get(i, j));
-							}
+			for(int i = 0 ; i < e.getDOFNumbers().length ; i++) {
+				if (e.getDOFNumbers()[i] != -1) {
+					for(int j = 0 ; j < e.getDOFNumbers().length ; j++) {
+						if (e.getDOFNumbers()[j] != -1) {
+							kGlobal.add(e.getDOFNumbers()[i], e.getDOFNumbers()[j], temp.get(i, j));
 						}
 					}
+				}
 			}
+//			for(int i : e.getDOFNumbers()) {
+//					if(i != -1) {
+//						for(int j : e.getDOFNumbers()) {
+//							if (j != -1) {
+//								kGlobal.add(i, j, temp.get(i, j));
+//							}
+//						}
+//					}
+//			}
 		}
 		//System.out.println(ArrayFormat.fFormat(kGlobal.toString()));
 	}
